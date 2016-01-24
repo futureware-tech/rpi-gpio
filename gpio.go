@@ -1,28 +1,6 @@
 package gpio
 
-/*
-#cgo LDFLAGS: -lrt
-
-#include "gpio.h"
-
-uint16_t DHT11(unsigned pin) {
-	uint8_t pulses[5] = {0};
-	gpioSetMode(pin, PI_OUTPUT);
-	gpioTrigger(pin, 18000, 0);
-	gpioSetMode(pin, PI_INPUT);
-	usleep(20);
-	if (gpioReadPulse(pin, 100, 0) > 100 ||
-		gpioReadPulse(pin, 100, 1) > 100) {
-		return 0;
-	}
-	if (gpioReadPulses(pin, 1000, sizeof(pulses) << 3, pulses)) {
-		if (pulses[0] + pulses[1] + pulses[2] + pulses[3] == pulses[4]) {
-			return (pulses[0] << 8) + pulses[2];
-		}
-	}
-	return 0;
-}
-*/
+// #include "gpio.h"
 import "C"
 import "time"
 
@@ -118,13 +96,7 @@ func (pin Pin) Trigger(t time.Duration, value bool) {
 	C.gpioTrigger(C.uint(pin), C.uint(t.Nanoseconds()/1000), intValue)
 }
 
-// DHT11 reads humidity and temperature from the sensor
-func (pin Pin) DHT11() (byte, byte) {
-	humidityAndTemperature := int(C.DHT11(C.uint(pin)))
-	return byte(humidityAndTemperature >> 8),
-		byte(humidityAndTemperature & 255)
+// Pull the resistor on GPIO pin
+func (pin Pin) Pull(state PullState) {
+	C.gpioSetPullUpDown(C.uint(pin), C.uint(state))
 }
-
-/*
-void gpioSetPullUpDown(unsigned gpio, unsigned pud)
-*/
