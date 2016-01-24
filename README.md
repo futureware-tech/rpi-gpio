@@ -1,5 +1,5 @@
 # rpi-gpio
-Very simple GPIO library in CGo using /dev/gpiomem (bonus: DHT11 sensor)
+Very simple GPIO library in CGo using /dev/gpiomem
 
 [![GoDoc](https://godoc.org/github.com/dasfoo/rpi-gpio?status.svg)](http://godoc.org/github.com/dasfoo/rpi-gpio)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
